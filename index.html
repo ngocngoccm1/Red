@@ -325,6 +325,9 @@
     .promise-card-primary p { color: rgba(255, 250, 250, .87); }
     .promise-stamp { display: inline-block; margin: 0 0 1rem; border: 1px solid currentColor; border-radius: 100px; padding: .45rem .8rem; font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
     .promise-grid.is-visible .promise-card { animation: card-rise 1s both var(--ease); animation-delay: calc(var(--order) * 130ms); }
+    .hygiene-promise { margin-top: 1.5rem; border-left: 5px solid var(--accent); padding: clamp(1.5rem, 4vw, 3rem); background: var(--paper-soft); }
+    .hygiene-promise .eyebrow { margin-bottom: .8rem; }
+    .hygiene-promise h3 { max-width: 25ch; margin: 0; color: var(--accent-deep); font-family: var(--display); font-size: clamp(2.4rem, 5vw, 5rem); font-weight: 400; letter-spacing: -.045em; line-height: 1.05; }
 
     .feature {
       display: grid;
@@ -490,6 +493,15 @@
     .dialog-offer strong { display: block; color: var(--accent-deep); font-size: 1.08rem; line-height: 1.3; }
     .dialog-offer span { display: block; margin-top: .3rem; color: var(--ink); font-size: .85rem; }
     .dialog-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+    .opening-panel { position: relative; width: min(100%, 580px); padding: 0 !important; background: #fce7d6; }
+    .opening-panel .dialog-close { position: absolute; top: .75rem; right: .75rem; z-index: 2; float: none; border-radius: 100px; padding: .65rem .85rem; background: #fff8f0; color: #522412; box-shadow: 0 2px 12px #52241215; }
+    .opening-art { aspect-ratio: 1; overflow: hidden; }
+    .opening-art img { width: 100%; height: auto; transform: translateY(-16.7%); filter: none; }
+    .opening-panel .dialog-actions { align-items: center; justify-content: center; margin: 0; padding: 1rem; gap: 1rem; }
+    .opening-panel .button { background: #522412; border-color: #522412; }
+    .opening-panel .button:hover { background: #71381f; }
+    .opening-panel .text-link { color: #522412; }
 
     .lightbox-panel { width: min(100%, 1150px); padding: 0; background: transparent; color: var(--on-accent); overflow: visible; }
     .lightbox-image { max-height: calc(100dvh - 8rem); object-fit: contain; }
@@ -747,6 +759,10 @@
             <div><h3>A moment worth taking.</h3><p>Thoughtful nail care and attention to the little details, from the first conversation to the final look.</p></div>
           </article>
         </div>
+        <div class="hygiene-promise reveal">
+          <p class="eyebrow">Our hygiene promise</p>
+          <h3>All tools used are <strong>sterilised.</strong></h3>
+        </div>
       </div>
     </section>
 
@@ -779,8 +795,8 @@
         <div class="salon-tour reveal">
           <div><p class="eyebrow">A real look around</p><h3 class="salon-tour-heading">Step inside.</h3><p class="salon-tour-note">Explore our salon at 265 Main Street, Bulwell. Press play for a tour of the space.</p></div>
           <video controls playsinline preload="none" poster="assets/images/salon-entrance.jpg" aria-label="A video tour of the Red Nails salon">
-            <source src="assets/videos/red-nails-salon-tour.mp4" type="video/mp4">
-            Your browser does not support embedded video. <a href="assets/videos/red-nails-salon-tour.mp4">Watch the salon tour</a>.
+            <source src="assets/videos/red-nails-salon-tour-music.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="assets/videos/red-nails-salon-tour-music.mp4">Watch the salon tour</a>.
           </video>
         </div>
       </div>
@@ -851,12 +867,11 @@
   <button class="mobile-book" type="button" data-book>Book now</button>
 
   <div class="dialog-backdrop" id="openingDialog" role="dialog" aria-modal="true" aria-labelledby="openingTitle" hidden>
-    <div class="dialog-panel">
+    <div class="dialog-panel opening-panel">
       <button class="dialog-close" type="button" data-close>Close</button>
-      <p class="dialog-kicker">Grand opening</p>
-      <h2 id="openingTitle">We open 30 September.</h2>
-      <p>Meet Red Nails on Main Street in Bulwell. Discover modern nail care and a new space made for your next favourite set.</p>
-      <div class="dialog-offer"><strong>30% off all treatments</strong><span>Grand opening offer · 30 September–14 October</span></div>
+      <h2 id="openingTitle" class="visually-hidden">Red Nails grand opening: 30% off all treatments</h2>
+      <p class="visually-hidden">We open 30 September. Offer valid from 30 September to 14 October.</p>
+      <div class="opening-art"><img src="assets/images/grand-opening-offer.png" alt="Grand opening poster with pink nails and a warm peach floral background" width="1103" height="1600"></div>
       <div class="dialog-actions">
         <a class="button" href="#treatments" data-close>View treatments</a>
         <a class="text-link" href="https://www.google.com/maps/search/?api=1&amp;query=265%20Main%20Street%20Bulwell%20NG6%208EZ" target="_blank" rel="noopener noreferrer">Get directions</a>
@@ -993,10 +1008,10 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     try {
-      if (!sessionStorage.getItem('redNailsOpeningOfferSeen30Sep')) {
+      if (!sessionStorage.getItem('redNailsOpeningPosterSeen30Sep')) {
         setTimeout(() => {
           openDialog(openingDialog);
-          sessionStorage.setItem('redNailsOpeningOfferSeen30Sep', 'true');
+          sessionStorage.setItem('redNailsOpeningPosterSeen30Sep', 'true');
         }, 2400);
       }
     } catch (error) {
