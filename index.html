@@ -370,6 +370,15 @@
       line-height: .92;
     }
     .experience-copy p { color: var(--muted); }
+    .salon-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .salon-photo { display: block; width: 100%; aspect-ratio: 4 / 3; border: 0; padding: 0; overflow: hidden; background: var(--line); cursor: zoom-in; }
+    .salon-photo img { transition: transform .7s var(--ease); }
+    .salon-photo:hover img { transform: scale(1.04); }
+    .experience-media.salon-photo { aspect-ratio: 16 / 10; }
+    .salon-tour { display: grid; grid-template-columns: 1fr minmax(0, 24rem); align-items: center; gap: 3rem; margin-top: clamp(3rem, 6vw, 6rem); }
+    .salon-tour-heading { margin-bottom: 1rem; font-family: var(--display); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; letter-spacing: -.055em; line-height: 1; }
+    .salon-tour video { display: block; width: 100%; aspect-ratio: 464 / 832; background: #211f20; object-fit: contain; }
+    .salon-tour-note { margin: .75rem 0 0; color: var(--muted); font-size: .85rem; }
 
     .campaign {
       min-height: 78dvh;
@@ -555,6 +564,10 @@
       .experience-grid { grid-template-columns: 1fr; gap: 2.4rem; }
       .experience-media { aspect-ratio: 4 / 3; }
       .experience-copy { padding: 0; }
+      .experience-media.salon-photo { aspect-ratio: 4 / 3; }
+      .salon-photos { grid-template-columns: 1fr; gap: .75rem; margin-top: 1.5rem; }
+      .salon-tour { grid-template-columns: 1fr; gap: 1.5rem; }
+      .salon-tour video { max-width: 24rem; margin-inline: auto; }
       .campaign { min-height: 70dvh; }
       .campaign img { object-position: 58% center; }
       .campaign h2 { font-size: clamp(4.5rem, 20vw, 7rem); }
@@ -750,12 +763,25 @@
 
     <section class="experience" aria-labelledby="experience-title">
       <div class="section-shell experience-grid">
-        <div class="experience-media reveal">
-          <img src="assets/images/salon-interior.webp" alt="Refined nail salon interior in pearl, chrome and red" width="1536" height="1024" loading="lazy">
-        </div>
+        <button class="experience-media salon-photo reveal" type="button" data-image="assets/images/salon-manicure-area.jpg" data-alt="The manicure stations and polish display inside Red Nails"><img src="assets/images/salon-manicure-area.jpg" alt="The manicure stations and polish display inside Red Nails" width="1600" height="1200" loading="lazy"></button>
         <div class="experience-copy reveal">
-          <h2 id="experience-title">Time, made beautifully yours.</h2>
-          <p>A considered salon experience centred on precision, comfort and a polished finish.</p>
+          <p class="eyebrow">Inside Red Nails</p>
+          <h2 id="experience-title">Your space to unwind.</h2>
+          <p>Take a look inside our Bulwell salon, from the manicure stations and colour display to our dedicated pedicure area.</p>
+        </div>
+      </div>
+      <div class="section-shell">
+        <div class="salon-photos">
+          <button class="salon-photo reveal" type="button" data-image="assets/images/salon-entrance.jpg" data-alt="A view into Red Nails from the entrance"><img src="assets/images/salon-entrance.jpg" alt="A view into Red Nails from the entrance" width="1600" height="1200" loading="lazy"></button>
+          <button class="salon-photo reveal" type="button" data-image="assets/images/salon-pedicure-area.jpg" data-alt="The pedicure area looking towards the salon entrance"><img src="assets/images/salon-pedicure-area.jpg" alt="The pedicure area looking towards the salon entrance" width="1600" height="1200" loading="lazy"></button>
+          <button class="salon-photo reveal" type="button" data-image="assets/images/salon-pedicure-chairs.jpg" data-alt="Three blue pedicure chairs at Red Nails"><img src="assets/images/salon-pedicure-chairs.jpg" alt="Three blue pedicure chairs at Red Nails" width="1600" height="1200" loading="lazy"></button>
+        </div>
+        <div class="salon-tour reveal">
+          <div><p class="eyebrow">A real look around</p><h3 class="salon-tour-heading">Step inside.</h3><p class="salon-tour-note">Explore our salon at 265 Main Street, Bulwell. Press play for a tour of the space.</p></div>
+          <video controls playsinline preload="none" poster="assets/images/salon-entrance.jpg" aria-label="A video tour of the Red Nails salon">
+            <source src="assets/videos/red-nails-salon-tour.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="assets/videos/red-nails-salon-tour.mp4">Watch the salon tour</a>.
+          </video>
         </div>
       </div>
     </section>
@@ -871,7 +897,7 @@
     const openingDialog = document.getElementById('openingDialog');
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
-    const galleryItems = [...document.querySelectorAll('.gallery-item')];
+    const galleryItems = [...document.querySelectorAll('.gallery-item, .salon-photo')];
     let activeDialog = null;
     let lastFocused = null;
     let activeImage = 0;
